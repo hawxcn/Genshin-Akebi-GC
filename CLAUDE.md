@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Akebi-GC is a Windows-only C++ game modification for Genshin Impact. It is a DLL (`CLibrary.dll`) that hooks into the game's IL2CPP runtime, plus a separate `injector.exe` that launches the game suspended and injects the DLL. All features render through an ImGui overlay (F1 opens the GUI in-game).
 
+## Detailed docs
+
+In-depth Chinese documentation lives in [`Doc/`](./Doc/) — start at [`Doc/00-文档总览.md`](./Doc/00-文档总览.md). It covers the architecture, injector, cheat-base framework, IL2CPP binding layer, game abstraction layer, the full feature catalog, and a developer guide (how to add a feature). Consult it for anything below the level of detail in this file.
+
 ## Building
 
 - **Toolchain:** Visual Studio 2022 (v17), MSBuild, Windows target only. Build from the solution `akebi-gc.sln`.
