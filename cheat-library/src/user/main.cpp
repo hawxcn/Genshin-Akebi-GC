@@ -10,7 +10,7 @@
 #include <tlhelp32.h>
 #include <cheat/ILPatternScanner.h>
 #include <resource.h>
-#include <cheat/debugger.h>
+#include <cheat/DebuggerBypassProtection.h>
 
 void Run(HMODULE* phModule)
 {
@@ -36,11 +36,14 @@ void Run(HMODULE* phModule)
 
 	runtime::unity::UnityLifecycle lifecycle;
 
-	// DebuggerBypass stays in Run() for now (protection sinks to core in P2).
-	// Order: Pre -> wait -> Post -> bind.
-	DebuggerBypassPre();
+	// Protection now runs through the engine-agnostic protection::IProtection slot
+	// (P2 5.3). Behavior is unchanged: same debugger-bypass stubs, same order
+	// (Pre -> wait -> Post -> bind). P2 5.4 moves this into bootstrap with the set
+	// of protections driven by the manifest.
+	cheat::DebuggerBypassProtection debuggerBypass;
+	debuggerBypass.ApplyPre();
 	lifecycle.WaitForRuntime();
-	DebuggerBypassPost();
+	debuggerBypass.ApplyPost();
 	lifecycle.InitBinding();
 
 	cheat::Init();

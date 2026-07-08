@@ -75,6 +75,7 @@
     <ClInclude Include="src\framework\adapters\unity-il2cpp\UnityPatch.h" />
     <ClInclude Include="src\framework\pch-il2cpp.h" />
     <ClInclude Include="src\user\cheat\cheat.h" />
+    <ClInclude Include="src\user\cheat\DebuggerBypassProtection.h" />
     <ClInclude Include="src\user\cheat\esp\ESP.h" />
     <ClInclude Include="src\user\cheat\events.h" />
     <ClInclude Include="src\user\cheat\game\filters.h" />
@@ -122,6 +123,7 @@
     <ClCompile Include="src\framework\adapters\unity-il2cpp\UnityLifecycle.cpp" />
     <ClCompile Include="src\framework\adapters\unity-il2cpp\UnityHeartbeat.cpp" />
     <ClCompile Include="src\framework\adapters\unity-il2cpp\UnityCursor.cpp" />
+    <ClCompile Include="src\user\cheat\DebuggerBypassProtection.cpp" />
     <ClCompile Include="src\user\cheat\misc\About.cpp" />
     <ClCompile Include="src\user\cheat\misc\sniffer\pipe\messages\PipeMessage.cpp" />
     <ClCompile Include="src\user\cheat\misc\sniffer\pipe\messages\PipeModifyData.cpp" />
