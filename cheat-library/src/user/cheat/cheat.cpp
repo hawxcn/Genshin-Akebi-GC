@@ -4,6 +4,7 @@
 #include <helpers.h>
 
 #include <cheat/events.h>
+#include <adapters/unity-il2cpp/UnityHeartbeat.h>
 
 #include <cheat-base/cheat/misc/Settings.h>
 
@@ -178,16 +179,6 @@ namespace cheat
 		_lastUserID = accountData.userId;
 	}
 
-	static void GameManager_Update_Hook(app::GameManager* __this, MethodInfo* method)
-	{
-		SAFE_BEGIN();
-		events::GameUpdateEvent();
-		CheckAccountChanged();
-		SAFE_EEND();
-		
-		CALL_ORIGIN(GameManager_Update_Hook, __this, method);
-	}
-
 	static void LevelSyncCombatPlugin_RequestSceneEntityMoveReq_Hook(app::LevelSyncCombatPlugin* __this, uint32_t entityId, app::MotionInfo* syncInfo,
 		bool isReliable, uint32_t relseq, MethodInfo* method)
 	{
@@ -195,9 +186,18 @@ namespace cheat
 		CALL_ORIGIN(LevelSyncCombatPlugin_RequestSceneEntityMoveReq_Hook, __this, entityId, syncInfo, isReliable, relseq, method);
 	}
 
-	static void InstallEventHooks() 
+	static void InstallEventHooks()
 	{
-		HookManager::install(app::GameManager_Update, GameManager_Update_Hook);
+		// Heartbeat: the GameManager.Update hook now lives in the unity adapter.
+		// The tick closure keeps the original hook body's two explicit calls in the
+		// same order (GameUpdateEvent then CheckAccountChanged).
+		static runtime::unity::UnityHeartbeat heartbeat;
+		heartbeat.Install([] {
+			events::GameUpdateEvent();
+			CheckAccountChanged();
+		});
+
+		// Move sync (Genshin business) kept as-is.
 		HookManager::install(app::MoleMole_LevelSyncCombatPlugin_RequestSceneEntityMoveReq, LevelSyncCombatPlugin_RequestSceneEntityMoveReq_Hook);
 	}
 
