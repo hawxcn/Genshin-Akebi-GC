@@ -8,7 +8,11 @@ Akebi-GC is a Windows-only C++ game modification for Genshin Impact. It is a DLL
 
 ## Detailed docs
 
-In-depth Chinese documentation lives in [`Doc/`](./Doc/) — start at [`Doc/00-文档总览.md`](./Doc/00-文档总览.md). It covers the architecture, injector, cheat-base framework, IL2CPP binding layer, game abstraction layer, the full feature catalog, and a developer guide (how to add a feature). Consult it for anything below the level of detail in this file.
+In-depth Chinese documentation lives in [`Doc/`](./Doc/), split into two sets:
+- [`Doc/原始设计/`](./Doc/原始设计/) — documentation of the existing project. Start at [`Doc/原始设计/00-文档总览.md`](./Doc/原始设计/00-文档总览.md). Covers the architecture, injector, cheat-base framework, IL2CPP binding layer, game abstraction layer, the full feature catalog, and a developer guide (how to add a feature).
+- [`Doc/改造计划/`](./Doc/改造计划/) — the framework-refactor design and rollout plans (making the project a generic Unity/UE modding framework). See [`Doc/改造计划/设计-通用化框架改造方案.md`](./Doc/改造计划/设计-通用化框架改造方案.md) plus the P1A/P1B/P1C landing plans.
+
+Consult these for anything below the level of detail in this file.
 
 ## Building
 
