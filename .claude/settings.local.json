@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"F:\\\\Demo\\\\Genshin-Akebi-GC\" -Force)",
+      "Bash(Select-Object Name, FullName)"
+    ]
+  }
+}
