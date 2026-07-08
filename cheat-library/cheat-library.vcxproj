@@ -68,6 +68,10 @@
     <ClInclude Include="src\framework\helpers.h" />
     <ClInclude Include="src\framework\il2cpp-appdata.h" />
     <ClInclude Include="src\framework\il2cpp-init.h" />
+    <ClInclude Include="src\framework\adapters\unity-il2cpp\UnityBinding.h" />
+    <ClInclude Include="src\framework\adapters\unity-il2cpp\UnityLifecycle.h" />
+    <ClInclude Include="src\framework\adapters\unity-il2cpp\UnityHeartbeat.h" />
+    <ClInclude Include="src\framework\adapters\unity-il2cpp\UnityCursor.h" />
     <ClInclude Include="src\framework\pch-il2cpp.h" />
     <ClInclude Include="src\user\cheat\cheat.h" />
     <ClInclude Include="src\user\cheat\esp\ESP.h" />
@@ -113,6 +117,10 @@
     <Font Include="res\Ruda-ExtraBold.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\framework\adapters\unity-il2cpp\UnityBinding.cpp" />
+    <ClCompile Include="src\framework\adapters\unity-il2cpp\UnityLifecycle.cpp" />
+    <ClCompile Include="src\framework\adapters\unity-il2cpp\UnityHeartbeat.cpp" />
+    <ClCompile Include="src\framework\adapters\unity-il2cpp\UnityCursor.cpp" />
     <ClCompile Include="src\user\cheat\misc\About.cpp" />
     <ClCompile Include="src\user\cheat\misc\sniffer\pipe\messages\PipeMessage.cpp" />
     <ClCompile Include="src\user\cheat\misc\sniffer\pipe\messages\PipeModifyData.cpp" />
