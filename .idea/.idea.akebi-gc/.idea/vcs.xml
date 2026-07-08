@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/cheat-base/vendor/fmt" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/cheat-base/vendor/json" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/cheat-base/vendor/magic_enum" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/cheat-base/vendor/simpleIni" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/cheat-base/vendor/stb" vcs="Git" />
+  </component>
+</project>

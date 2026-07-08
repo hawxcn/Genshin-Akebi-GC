@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Doc/设计-通用化框架改造方案.md",
+                "file": "Doc/落地计划-P1A-绑定与生命周期详解.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "设计-通用化框架改造方案"
+              "title": "落地计划-P1A-绑定与生命周期详解"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Doc/设计-通用化框架改造方案.md",
+                "file": "Doc/落地计划-P1A-绑定与生命周期详解.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "设计-通用化框架改造方案 的反向链接列表"
+              "title": "落地计划-P1A-绑定与生命周期详解 的反向链接列表"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Doc/设计-通用化框架改造方案.md",
+                "file": "Doc/落地计划-P1A-绑定与生命周期详解.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "设计-通用化框架改造方案 的出链列表"
+              "title": "落地计划-P1A-绑定与生命周期详解 的出链列表"
             }
           },
           {
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Doc/设计-通用化框架改造方案.md",
+                "file": "Doc/落地计划-P1A-绑定与生命周期详解.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "设计-通用化框架改造方案 的大纲"
+              "title": "落地计划-P1A-绑定与生命周期详解 的大纲"
             }
           }
         ]
@@ -185,21 +185,41 @@
   },
   "active": "c9ad4bd5250cba4f",
   "lastOpenFiles": [
-    "Doc/设计-UE4-UE5静态模块化框架改造计划.md",
-    "Doc/设计-通用化框架改造方案.md.tmp.50320.93e96bc8700f",
-    "Doc/设计-通用化框架改造方案.md.tmp.50320.d431bdcb8482",
-    "Doc/设计-通用化框架改造方案.md.tmp.50320.1f89f9c9b0b2",
-    "Doc/08-开发指南.md",
+    "bin/Debug-x64/obj/cheat-library/cheat-library.tlog/link.command.1.tlog",
+    "bin/Debug-x64/obj/cheat-library/cheat-library.tlog/link.write.1.tlog",
+    "bin/Debug-x64/obj/cheat-library/cheat-library.tlog/link.read.1.tlog",
+    "bin/Debug-x64/obj/cheat-library/cheat-library.tlog/rc.command.1.tlog",
+    "bin/Debug-x64/obj/cheat-library/cheat-library.tlog/rc.write.1.tlog",
+    "bin/Debug-x64/obj/cheat-library/cheat-library.tlog/rc.read.1.tlog",
+    "bin/Debug-x64/obj/cheat-library/RDa43548",
+    "bin/Debug-x64/obj/cheat-library/RCa43548",
+    "bin/Debug-x64/obj/cheat-library/res.res",
+    "bin/Debug-x64/obj/cheat-library/dllmain.obj",
+    "bin/Debug-x64/obj/cheat-library/AutoLoot.obj",
+    "cheat-base/vendor/imgui/misc/freetype/README.md",
+    "cheat-base/vendor/imgui/examples/example_sdl_opengl2/README.md",
+    "cheat-base/vendor/imgui/examples/example_sdl_sdlrenderer/README.md",
+    "cheat-base/vendor/imgui/examples/example_sdl_opengl3/README.md",
+    "cheat-base/vendor/imgui/examples/example_emscripten_wgpu/README.md",
+    "cheat-base/vendor/imgui/examples/example_apple_metal/README.md",
+    "cheat-base/vendor/imgui/examples/example_emscripten_opengl3/README.md",
+    "cheat-base/vendor/imgui/examples/example_allegro5/README.md",
+    "cheat-base/vendor/imgui/docs/README.md",
+    "cheat-base/vendor/imgui/docs/FONTS.md",
+    "cheat-base/vendor/imgui/docs/EXAMPLES.md",
+    "cheat-base/vendor/imgui/docs/FAQ.md",
+    "cheat-base/vendor/imgui/docs/BACKENDS.md",
+    "Doc/落地计划-P1B-心跳详解.md",
+    "Doc/00-文档总览.md",
+    "Doc/落地计划-P1A-绑定与生命周期详解.md",
     "Doc/设计-通用化框架改造方案.md",
-    "Doc/设计-通用化框架改造方案.md.tmp.50320.c934187c2a50",
-    "Doc/设计-通用化框架改造方案.md.tmp.50320.9fffab36380e",
-    "Doc/设计-通用化框架改造方案.md.tmp.50320.5a1304461612",
-    "Doc/设计-通用化框架改造方案.md.tmp.50320.e3a96e5914c4",
+    "Doc/落地计划-P0-P2-Unity侧重构.md",
+    "Doc/设计-UE4-UE5静态模块化框架改造计划.md",
+    "Doc/08-开发指南.md",
     "README.md",
     "README_en-US.md",
     "README_zh-Hant.md",
     "README_vi-vn.md",
-    "Doc/01-架构总览.md",
-    "Doc/00-文档总览.md"
+    "Doc/01-架构总览.md"
   ]
 }
