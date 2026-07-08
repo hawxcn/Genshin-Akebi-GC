@@ -241,11 +241,11 @@ static void InstallEventHooks()
 
 ---
 
-## 九、B 子线待定微决策（动工前拍板）
+## 九、B 子线微决策（已确认）
 
-1. **`s_tick` 承载形态**：确认用"文件内 `std::function` 单槽 + 具名 Hook 函数"（本文方案，契合 `HookManager` 的具名指针 + `CALL_ORIGIN` 约束）。除非有更强理由，不建议改用成员函数指针/其它 trampoline。
-2. **`heartbeat` 实例所有权**：P1 用 `InstallEventHooks` 内 `static` 局部（长生命周期、Hook 常驻）。确认 P2 bootstrap 引入后改由 bootstrap 持有——与 A 子线的 `UnityLifecycle`/`UnityBinding` 归口一致。
-3. **确认 `CheckAccountChanged` 保持非订阅者**（§六结论）——即本次不把它解耦成订阅者。
+1. **`s_tick` 承载形态**（已定）：文件内 `std::function` 单槽 + 具名 Hook 函数（契合 `HookManager` 具名指针 + `CALL_ORIGIN` 约束）。
+2. **`heartbeat` 实例所有权**（已定）：P1 用 `InstallEventHooks` 内 `static` 局部；P2 bootstrap 引入后交 bootstrap 持有，与 A 子线 `UnityLifecycle`/`UnityBinding` 归口一致。
+3. **`CheckAccountChanged` 触发方式**（已定）：**保持非订阅者、由 tick 闭包显式调用**（§六结论，修订落地计划 B3），严格等价、无顺序风险。本次不把它解耦成订阅者。
 
 ---
 

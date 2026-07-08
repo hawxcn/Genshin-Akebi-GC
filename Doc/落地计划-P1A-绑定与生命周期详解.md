@@ -63,8 +63,9 @@ namespace runtime
         virtual uintptr_t ModuleBase(std::string_view module) const = 0;
 
         // 按名解析原生函数地址。
-        // Unity: 本期返回 nullptr —— 偏移在编译期静态注入(X-Macro)，无需运行时按名解析。
-        //        预留此签名以便 UE5(P3) / 带扫描器构建按需实现。
+        // Unity: 委托 ILPatternScanner 按签名名搜索(见 §四 4.1)。
+        //        限制——只能解析 signatures.json 里有签名的符号；纯静态偏移(无签名)
+        //        的 app:: 函数按名查不到，故为"尽力而为"。
         virtual void* ResolveFunction(std::string_view symbol) = 0;
 
         // —— 主动调用能力：UE5(P4) 用；Unity 全部空实现 ——
@@ -131,7 +132,9 @@ namespace runtime::unity
         void*     ResolveFunction(std::string_view symbol) override;
         // ProcessEvent 系列用基类默认空实现(Unity 不支持)。
     private:
-        bool m_ready = false;
+        bool               m_ready = false;
+        bool               m_sigParsed = false;   // ResolveFunction 懒加载标志
+        ILPatternScanner   m_scanner;             // 决策②：按名解析委托它
         friend class UnityLifecycle;   // 由 lifecycle 在 InitBinding 后置位 m_ready
     };
 }
@@ -143,7 +146,12 @@ namespace runtime::unity
   - `"UserAssembly.dll"` / 空 → `il2cppi_get_base_address()`
   - `"UnityPlayer.dll"` → `il2cppi_get_unity_address()`
   - 其它 → `(uintptr_t)GetModuleHandleA(module.data())`（或返回 0）
-- `ResolveFunction(symbol)` → 本期 `return nullptr;` + 一行 `LOG_DEBUG` 注明"Unity 用静态偏移，未走按名解析"。
+- `ResolveFunction(symbol)` → **委托 `ILPatternScanner`**（决策②）。实现：
+  - 持有一个 `ILPatternScanner` 成员，**首次调用时懒加载**：`ResourceLoader::Load("Signatures", RT_RCDATA)` → `ParseSignatureFile(...)`（解析一次，置标志位，后续复用）。
+  - 返回 `scanner.Search("UserAssembly.dll", symbol)`；未命中返回 `nullptr`。
+  - **限制（务必在代码注释里写明）**：只解析 `signatures.json` 里有签名登记的符号；纯静态偏移的 `app::` 函数按名查不到。故此方法是"尽力而为"，Unity 主路径仍靠编译期静态偏移，本方法供确需按名解析的少数场景。
+  - **性能**：每次 `Search` 会在模块内存里扫签名，开销不小；因 `ResolveFunction` 预期低频调用可接受，若将来高频再加结果缓存（`name→addr` map）。
+  - **链接性**：`ILPatternScanner` 在任何构建都参与编译（`init_scanned_offsets` 恒被编译，仅调用点受 `_PATTERN_SCANNER` 约束），故此实现**无需 `#ifdef`**，静态构建下同样可用。
 
 ### 4.2 `UnityLifecycle.{h,cpp}`
 
@@ -177,13 +185,11 @@ void UnityLifecycle::WaitForRuntime()
         LOG_DEBUG("UserAssembly.dll isn't initialized, waiting for 2 sec.");
         Sleep(2000);
     }
-#ifdef _DEBUG
-    LOG_DEBUG("Waiting 10sec for loading game library.");
+    // 决策③(顺手修正)：原 _DEBUG/_else 两分支 Sleep 时长本就相同(均 15000)，
+    // 仅 _DEBUG 日志文案误写"10sec"。保守修法=合并冗余 #ifdef + 统一文案，
+    // Sleep 时长不变(行为保持)。已在独立 commit A-0 于原 Run() 就地修好，此处搬的是修正后代码。
+    LOG_DEBUG("Waiting 15 sec for game initialization.");
     Sleep(15000);
-#else
-    LOG_DEBUG("Waiting 15sec for game initialize.");
-    Sleep(15000);
-#endif
 }
 
 void UnityLifecycle::InitBinding()
@@ -193,7 +199,7 @@ void UnityLifecycle::InitBinding()
 }
 ```
 
-> ⚠️ **逐行照搬**原 `Run()` 的等待逻辑，包括那个 `_DEBUG` 分支里日志写 10 秒、实际 `Sleep(15000)` 的既有小不一致——A 子线**不修**它（修了就是行为变更，脱离纯搬运）。如要修，另起独立 commit 并单独验证。
+> ⚠️ 等待逻辑逐行照搬，**唯一例外**是决策③：`_DEBUG` 分支的日志/`#ifdef` 不一致在**独立 commit A-0** 里先就地修好（行为保持，仅文案+去冗余 `#ifdef`），再由 A-1 搬迁修正后的代码。若你本意是"调试构建应等更短的 10 秒"（时序变更），请明确告知——当前默认按行为保持处理。
 
 ---
 
@@ -289,10 +295,11 @@ void Run(HMODULE* phModule)
 
 | commit | 内容 | 验证 |
 |--------|------|------|
-| A-1 | 新增 `UnityBinding.{h,cpp}`、`UnityLifecycle.{h,cpp}`；加入 `cheat-library.vcxproj`。**暂不接线** | 编译通过（新类无人调用） |
-| A-2 | 改造 `Run()`：构造 `lifecycle`，用 `WaitForRuntime()`+`InitBinding()` 替换原②③⑤ | 编译 + 注入 Genshin，启动日志顺序/时长与旧版一致，偏移解析成功、功能可用 |
+| A-0 | 决策③：在**现有** `Run()` 就地修正 `_DEBUG` 分支日志/`#ifdef` 不一致（合并两分支、统一文案，`Sleep(15000)` 不变）。独立于重构 | 编译 + 注入，启动等待时长与旧版一致（仅调试日志文案变化） |
+| A-1 | 新增 `UnityBinding.{h,cpp}`、`UnityLifecycle.{h,cpp}`（含决策②的 scanner 委托）；加入 `cheat-library.vcxproj`。**暂不接线** | 编译通过（新类无人调用） |
+| A-2 | 改造 `Run()`：构造 `lifecycle`，用 `WaitForRuntime()`+`InitBinding()` 替换原②③⑤（搬迁 A-0 修正后的等待代码） | 编译 + 注入 Genshin，启动日志顺序/时长与旧版一致，偏移解析成功、功能可用 |
 
-> 拆两个 commit：A-1 只加代码不改行为（绝对安全）；A-2 才切换调用点（唯一有回归风险处），一旦冒烟失败，`revert` A-2 即回到可用态。
+> 拆三个 commit：A-0 先把既有小瑕疵就地修掉（行为保持，与重构解耦）；A-1 只加代码不改行为（绝对安全）；A-2 才切换调用点（唯一有回归风险处），一旦冒烟失败，`revert` A-2 即回到可用态。
 
 ---
 
@@ -307,11 +314,12 @@ void Run(HMODULE* phModule)
 
 ---
 
-## 九、A 子线的待定微决策（动工前顺手拍板）
+## 九、A 子线微决策（已确认）
 
-1. **接口头的 include 前缀**：新目录物理路径 `cheat-base/src/cheat-base/runtime/`，则引用写 `#include <cheat-base/runtime/ILifecycle.h>`（沿用现有 `<cheat-base/...>` 惯例）。适配器放 `cheat-library/src/framework/adapters/unity-il2cpp/`，`cheat-library.vcxproj` 已含 `$(ProjectDir)src/framework` 于 include 路径，故引用可写 `<adapters/unity-il2cpp/UnityLifecycle.h>` 或加相对路径——二选一，全项目统一即可。
-2. **`ResolveFunction` 本期形态**：确认返回 `nullptr`（Unity 静态偏移不需要它），还是顺手接一层 `ILPatternScanner::Search`？建议**先 `nullptr`**，等 P4/UE5 真正需要按名解析时再充实，避免过早实现。
-3. **`_DEBUG` 分支日志/Sleep 不一致**：确认 A 子线**照搬不修**（保持纯搬运）。若想修，另开 commit。
+1. **接口/适配器 include 前缀**（已定）：runtime 接口用 `#include <cheat-base/runtime/ILifecycle.h>`；适配器放 `cheat-library/src/framework/adapters/unity-il2cpp/`，引用写 `#include <adapters/unity-il2cpp/UnityLifecycle.h>`（借 `cheat-library.vcxproj` 已有的 `$(ProjectDir)src/framework` include 路径）。全项目统一此风格。
+2. **`ResolveFunction` 本期形态**（已定）：**委托 `ILPatternScanner`**（懒加载签名、按名 `Search`）。限制与性能见 §四 4.1——只解析签名登记过的符号，尽力而为。
+3. **`_DEBUG` 分支不一致**（已定）：**顺手修正**，且按"行为保持"口径（统一日志文案 + 合并冗余 `#ifdef`，`Sleep` 时长不变），落在独立 commit **A-0**。唯一遗留确认：若本意是调试构建应等更短的 10 秒（时序变更），需另行告知。
+4. **`s_tick`/实例承载 与 所有权**（已定，见 B 子线）：文件内单槽 + 具名 Hook；P1 用函数内 `static`、P2 交 bootstrap。
 
 ---
 
