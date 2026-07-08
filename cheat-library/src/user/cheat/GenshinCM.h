@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cheat-base/cheat/CheatManagerBase.h>
+#include <adapters/unity-il2cpp/UnityCursor.h>
 
 namespace cheat
 {
@@ -73,6 +74,8 @@ namespace cheat
 
 		internal::AccountData m_CurrentAccount;
 		config::Field<internal::AccountConfig> f_AccConfig;
+
+		runtime::unity::UnityCursor m_cursor;   // C-line: cursor impl delegate (P2 moves to bootstrap injection into base)
 
 		GenshinCM();
 
