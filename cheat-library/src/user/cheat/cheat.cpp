@@ -4,7 +4,9 @@
 #include <helpers.h>
 
 #include <cheat/events.h>
-#include <adapters/unity-il2cpp/UnityHeartbeat.h>
+
+#include <cheat-base/runtime/IEngineAdapter.h>
+#include <cheat-base/runtime/IHeartbeat.h>
 
 #include <cheat-base/cheat/misc/Settings.h>
 
@@ -65,11 +67,11 @@
 
 #include "GenshinCM.h"
 
-namespace cheat 
+namespace cheat
 {
-	static void InstallEventHooks();
+	static void InstallEventHooks(runtime::IEngineAdapter& adapter);
 
-	void Init()
+	void Init(runtime::IEngineAdapter& adapter, renderer::DXVersion backend)
 	{
 		config::SetupUpdate(&events::GameUpdateEvent);
 
@@ -77,6 +79,11 @@ namespace cheat
 		protectionBypass.Init();
 
 		GenshinCM& manager = GenshinCM::instance();
+
+		// Cursor control now comes from the engine adapter (P2 5.4). GenshinCM no
+		// longer owns a UnityCursor; the manager forwards to whatever the adapter
+		// provides, so a UE host injects its own controller the same way.
+		manager.SetCursorController(&adapter.Cursor());
 
 #define FEAT_INST(name) &feature::##name##::GetInstance()
 		manager.AddFeatures({
@@ -157,9 +164,9 @@ namespace cheat
 		if (!ResourceLoader::LoadEx("ImGui_Font", RT_RCDATA, pFontData, dFontSize))
 			LOG_WARNING("Failed to get font from resources.");
 
-		manager.Init(pFontData, dFontSize);
+		manager.Init(pFontData, dFontSize, backend);
 
-		InstallEventHooks();
+		InstallEventHooks(adapter);
 	}
 
 	static void CheckAccountChanged()
@@ -186,13 +193,12 @@ namespace cheat
 		CALL_ORIGIN(LevelSyncCombatPlugin_RequestSceneEntityMoveReq_Hook, __this, entityId, syncInfo, isReliable, relseq, method);
 	}
 
-	static void InstallEventHooks()
+	static void InstallEventHooks(runtime::IEngineAdapter& adapter)
 	{
-		// Heartbeat: the GameManager.Update hook now lives in the unity adapter.
-		// The tick closure keeps the original hook body's two explicit calls in the
-		// same order (GameUpdateEvent then CheckAccountChanged).
-		static runtime::unity::UnityHeartbeat heartbeat;
-		heartbeat.Install([] {
+		// Heartbeat: installed via the engine adapter (P2 5.4). The tick closure
+		// keeps the original hook body's two explicit calls in the same order
+		// (GameUpdateEvent then CheckAccountChanged).
+		adapter.Heartbeat().Install([] {
 			events::GameUpdateEvent();
 			CheckAccountChanged();
 		});

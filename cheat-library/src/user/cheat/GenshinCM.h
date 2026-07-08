@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cheat-base/cheat/CheatManagerBase.h>
-#include <adapters/unity-il2cpp/UnityCursor.h>
 
 namespace cheat
 {
@@ -71,8 +70,6 @@ namespace cheat
 
 		internal::AccountData m_CurrentAccount;
 		config::Field<internal::AccountConfig> f_AccConfig;
-
-		runtime::unity::UnityCursor m_cursor;   // injected into the base as ICursorController (P2 5.2; P2-4 moves ownership to the adapter)
 
 		GenshinCM();
 

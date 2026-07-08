@@ -1,0 +1,10 @@
+{
+  "$comment": "Framework host manifest (P2 5.4). Describes THIS single target product (release form = one host per game). Read by framework::Bootstrap next to the DLL at startup.",
+  "target": "genshin-impact",
+  "process": ["GenshinImpact.exe", "YuanShen.exe"],
+  "runtime": "unity-il2cpp",
+  "render": "auto",
+  "protection": {
+    "debugger-bypass": true
+  }
+}

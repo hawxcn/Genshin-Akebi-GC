@@ -73,6 +73,8 @@
     <ClInclude Include="src\framework\adapters\unity-il2cpp\UnityHeartbeat.h" />
     <ClInclude Include="src\framework\adapters\unity-il2cpp\UnityCursor.h" />
     <ClInclude Include="src\framework\adapters\unity-il2cpp\UnityPatch.h" />
+    <ClInclude Include="src\framework\adapters\unity-il2cpp\UnityAdapter.h" />
+    <ClInclude Include="src\framework\bootstrap.h" />
     <ClInclude Include="src\framework\pch-il2cpp.h" />
     <ClInclude Include="src\user\cheat\cheat.h" />
     <ClInclude Include="src\user\cheat\DebuggerBypassProtection.h" />
@@ -123,6 +125,8 @@
     <ClCompile Include="src\framework\adapters\unity-il2cpp\UnityLifecycle.cpp" />
     <ClCompile Include="src\framework\adapters\unity-il2cpp\UnityHeartbeat.cpp" />
     <ClCompile Include="src\framework\adapters\unity-il2cpp\UnityCursor.cpp" />
+    <ClCompile Include="src\framework\adapters\unity-il2cpp\UnityAdapter.cpp" />
+    <ClCompile Include="src\framework\bootstrap.cpp" />
     <ClCompile Include="src\user\cheat\DebuggerBypassProtection.cpp" />
     <ClCompile Include="src\user\cheat\misc\About.cpp" />
     <ClCompile Include="src\user\cheat\misc\sniffer\pipe\messages\PipeMessage.cpp" />
@@ -1426,4 +1430,11 @@ powershell -nop -c "&amp; {sleep 15}"</Command>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <!-- Ship framework.manifest.json next to the DLL so framework::Bootstrap can read it (P2 5.4). -->
+  <ItemGroup>
+    <None Include="framework.manifest.json" />
+  </ItemGroup>
+  <Target Name="CopyFrameworkManifest" AfterTargets="Build">
+    <Copy SourceFiles="$(ProjectDir)framework.manifest.json" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+  </Target>
 </Project>

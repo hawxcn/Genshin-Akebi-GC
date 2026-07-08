@@ -2,15 +2,9 @@
 #include "main.h"
 
 #include <helpers.h>
-#include <il2cpp-init.h>
-#include <adapters/unity-il2cpp/UnityLifecycle.h>
-#include <cheat/cheat.h>
-#include <cheat-base/cheat/misc/Settings.h>
-
-#include <tlhelp32.h>
-#include <cheat/ILPatternScanner.h>
 #include <resource.h>
-#include <cheat/DebuggerBypassProtection.h>
+#include <bootstrap.h>
+#include <cheat-base/cheat/misc/Settings.h>
 
 void Run(HMODULE* phModule)
 {
@@ -34,19 +28,14 @@ void Run(HMODULE* phModule)
 		il2cppi_new_console();
 	}
 
-	runtime::unity::UnityLifecycle lifecycle;
+	// Everything engine-specific (protection, adapter, runtime bring-up, backend
+	// selection, feature assembly) is driven by framework.manifest.json inside
+	// Bootstrap (P2 5.4). Run() only sets up paths, config and logging.
+	if (!framework::Bootstrap())
+	{
+		LOG_ERROR("Framework bootstrap failed; aborting.");
+		return;
+	}
 
-	// Protection now runs through the engine-agnostic protection::IProtection slot
-	// (P2 5.3). Behavior is unchanged: same debugger-bypass stubs, same order
-	// (Pre -> wait -> Post -> bind). P2 5.4 moves this into bootstrap with the set
-	// of protections driven by the manifest.
-	cheat::DebuggerBypassProtection debuggerBypass;
-	debuggerBypass.ApplyPre();
-	lifecycle.WaitForRuntime();
-	debuggerBypass.ApplyPost();
-	lifecycle.InitBinding();
-
-	cheat::Init();
-
-    LOG_DEBUG("Config path is at %s", (util::GetCurrentPath() / "cfg.json").string().c_str());
+	LOG_DEBUG("Config path is at %s", (util::GetCurrentPath() / "cfg.json").string().c_str());
 }
