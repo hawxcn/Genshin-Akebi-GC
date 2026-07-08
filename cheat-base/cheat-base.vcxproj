@@ -306,6 +306,11 @@
     <ClInclude Include="src\cheat-base\PatternScanner.h" />
     <ClInclude Include="src\cheat-base\cheat\CheatManagerBase.h" />
     <ClInclude Include="src\cheat-base\cheat\Feature.h" />
+    <ClInclude Include="src\cheat-base\runtime\IRuntimeBinding.h" />
+    <ClInclude Include="src\cheat-base\runtime\ILifecycle.h" />
+    <ClInclude Include="src\cheat-base\runtime\IHeartbeat.h" />
+    <ClInclude Include="src\cheat-base\runtime\ICursorController.h" />
+    <ClInclude Include="src\cheat-base\runtime\IEngineAdapter.h" />
     <ClInclude Include="src\cheat-base\cheat\misc\Settings.h" />
     <ClInclude Include="src\cheat-base\render\backend\dx11-hook.h" />
     <ClInclude Include="src\cheat-base\render\gui-util.h" />
