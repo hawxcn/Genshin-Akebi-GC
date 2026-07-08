@@ -15,4 +15,4 @@
 	url = https://github.com/nothings/stb.git
 [submodule "cheat-base/vendor/imgui"]
 	path = cheat-base/vendor/imgui
-	url = https://github.com/CallowBlack/imgui-brightness-fix.git
+	url = https://github.com/ocornut/imgui.git
