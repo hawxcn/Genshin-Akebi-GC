@@ -3,6 +3,7 @@
 
 #include <helpers.h>
 #include <il2cpp-init.h>
+#include <adapters/unity-il2cpp/UnityLifecycle.h>
 #include <cheat/cheat.h>
 #include <cheat-base/cheat/misc/Settings.h>
 
@@ -33,25 +34,14 @@ void Run(HMODULE* phModule)
 		il2cppi_new_console();
 	}
 
+	runtime::unity::UnityLifecycle lifecycle;
+
+	// DebuggerBypass stays in Run() for now (protection sinks to core in P2).
+	// Order: Pre -> wait -> Post -> bind.
 	DebuggerBypassPre();
-
-	while (GetModuleHandle("UserAssembly.dll") == nullptr)
-	{
-		LOG_DEBUG("UserAssembly.dll isn't initialized, waiting for 2 sec.");
-		Sleep(2000);
-	}
-
-#ifdef _DEBUG
-	LOG_DEBUG("Waiting 10sec for loading game library.");
-	Sleep(15000);
-#else
-	LOG_DEBUG("Waiting 15sec for game initialize.");
-    Sleep(15000);
-#endif
-	
+	lifecycle.WaitForRuntime();
 	DebuggerBypassPost();
-
-	init_il2cpp();
+	lifecycle.InitBinding();
 
 	cheat::Init();
 
