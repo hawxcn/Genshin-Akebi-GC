@@ -11,14 +11,10 @@
             "id": "c9ad4bd5250cba4f",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Doc/落地计划-P1A-绑定与生命周期详解.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "落地计划-P1A-绑定与生命周期详解"
+              "title": "新标签页"
             }
           }
         ]
@@ -94,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Doc/落地计划-P1A-绑定与生命周期详解.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +99,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "落地计划-P1A-绑定与生命周期详解 的反向链接列表"
+              "title": "反向链接"
             }
           },
           {
@@ -113,12 +108,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Doc/落地计划-P1A-绑定与生命周期详解.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "落地计划-P1A-绑定与生命周期详解 的出链列表"
+              "title": "出链"
             }
           },
           {
@@ -156,13 +150,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Doc/落地计划-P1A-绑定与生命周期详解.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "落地计划-P1A-绑定与生命周期详解 的大纲"
+              "title": "大纲"
             }
           }
         ]
@@ -185,41 +178,41 @@
   },
   "active": "c9ad4bd5250cba4f",
   "lastOpenFiles": [
-    "Doc/设计-通用化框架改造方案.md.tmp.50320.29d51dc28e0e",
-    "Doc/设计-通用化框架改造方案.md.tmp.50320.42d86b5ad12a",
-    "Doc/设计-通用化框架改造方案.md.tmp.50320.3c54356875ba",
-    "Doc/落地计划-P1B-心跳详解.md.tmp.50320.9dcb6275c408",
-    "Doc/落地计划-P1A-绑定与生命周期详解.md.tmp.50320.17af725c6a0f",
-    "Doc/落地计划-P1A-绑定与生命周期详解.md.tmp.50320.90e90c01ca17",
-    "Doc/落地计划-P1A-绑定与生命周期详解.md.tmp.50320.8fd529455ad6",
-    "Doc/落地计划-P1A-绑定与生命周期详解.md.tmp.50320.bd163e432a31",
-    "bin/Release-x64/obj/cheat-library/cheat-library.tlog/CustomBuildStep.write.1u.tlog",
-    "bin/Release-x64/obj/cheat-library/cheat-library.tlog/CustomBuildStep.read.1u.tlog",
-    "bin/Release-x64/obj/cheat-library/cheat-library.tlog/Cl.items.tlog",
-    "cheat-base/vendor/imgui/misc/freetype/README.md",
-    "cheat-base/vendor/imgui/examples/example_sdl_opengl2/README.md",
-    "cheat-base/vendor/imgui/examples/example_sdl_sdlrenderer/README.md",
-    "cheat-base/vendor/imgui/examples/example_sdl_opengl3/README.md",
-    "cheat-base/vendor/imgui/examples/example_emscripten_wgpu/README.md",
-    "cheat-base/vendor/imgui/examples/example_apple_metal/README.md",
-    "cheat-base/vendor/imgui/examples/example_emscripten_opengl3/README.md",
-    "cheat-base/vendor/imgui/examples/example_allegro5/README.md",
-    "cheat-base/vendor/imgui/docs/README.md",
-    "cheat-base/vendor/imgui/docs/FONTS.md",
-    "cheat-base/vendor/imgui/docs/EXAMPLES.md",
-    "cheat-base/vendor/imgui/docs/FAQ.md",
-    "cheat-base/vendor/imgui/docs/BACKENDS.md",
-    "Doc/落地计划-P1B-心跳详解.md",
-    "Doc/00-文档总览.md",
-    "Doc/落地计划-P1A-绑定与生命周期详解.md",
     "Doc/设计-通用化框架改造方案.md",
-    "Doc/落地计划-P0-P2-Unity侧重构.md",
+    "Doc/原始设计/08-开发指南.md",
+    "Doc/原始设计/06-cheat-library-游戏抽象层.md",
+    "Doc/原始设计/07-功能模块清单.md",
+    "Doc/原始设计/05-il2cpp-绑定层.md",
+    "Doc/原始设计/04-cheat-base-框架层.md",
+    "Doc/原始设计/03-injector-注入器.md",
+    "Doc/原始设计/02-构建与运行.md",
+    "Doc/原始设计/01-架构总览.md",
+    "Doc/原始设计/00-文档总览.md",
+    "Doc/原始设计",
+    "Doc/改造计划/落地计划-P0-P2-Unity侧重构.md",
+    "Doc/改造计划/落地计划-P1A-绑定与生命周期详解.md",
+    "Doc/改造计划/落地计划-P1B-心跳详解.md",
+    "Doc/改造计划/设计-通用化框架改造方案.md",
+    "Doc/改造计划/落地计划-P1C-光标详解.md",
+    "Doc/改造计划",
+    "bin/Release-x64/obj/cheat-library/UnityAdapter.obj",
+    "bin/Release-x64/obj/cheat-library/bootstrap.obj",
+    "cheat-library/cheat-library.vcxproj.tmp.56820.5bbbfd113a5f",
+    "cheat-library/cheat-library.vcxproj.tmp.56820.d33279621aed",
+    "cheat-library/framework.manifest.json",
+    "cheat-library/framework.manifest.json.tmp.56820.acf373d563fe",
+    "cheat-library/src/user/main.cpp.tmp.56820.d845e8e4dc31",
+    "cheat-library/src/user/cheat/GenshinCM.cpp.tmp.56820.99d2506a8279",
+    "Doc/落地计划-P1C-光标详解.md",
     "Doc/设计-UE4-UE5静态模块化框架改造计划.md",
+    "Doc/落地计划-P1B-心跳详解.md",
+    "Doc/落地计划-P1A-绑定与生命周期详解.md",
+    "Doc/落地计划-P0-P2-Unity侧重构.md",
     "Doc/08-开发指南.md",
-    "README.md",
-    "README_en-US.md",
-    "README_zh-Hant.md",
-    "README_vi-vn.md",
-    "Doc/01-架构总览.md"
+    "Doc/07-功能模块清单.md",
+    "Doc/05-il2cpp-绑定层.md",
+    "Doc/06-cheat-library-游戏抽象层.md",
+    "Doc/04-cheat-base-框架层.md",
+    "Doc/03-injector-注入器.md"
   ]
 }

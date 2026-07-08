@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(Get-ChildItem -Path \"F:\\\\Demo\\\\Genshin-Akebi-GC\" -Force)",
-      "Bash(Select-Object Name, FullName)"
+      "Bash(Select-Object Name, FullName)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }
