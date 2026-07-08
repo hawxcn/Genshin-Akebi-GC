@@ -3,10 +3,10 @@
 #include <vector>
 #include <map>
 
-#define OPatch(offset, value) Patch::Install(il2cppi_get_base_address() + offset, value)
-#define OUnpatch(offset) Patch::Restore(il2cppi_get_base_address() + offset)
-#define TogglePatch(field, targetField, offset, patchBytes) if (field == &targetField) { if (targetField.GetValue()) OPatch(offset, patchBytes); else OUnpatch(offset); return; }
-
+// Engine-agnostic byte-patch primitive: operates on absolute addresses only.
+// The Unity-specific "module base + offset" convenience macros (OPatch/OUnpatch/
+// TogglePatch) were moved to adapters/unity-il2cpp/UnityPatch.h so this header
+// carries no IL2CPP dependency (P2 5.1).
 class Patch
 {
 public:

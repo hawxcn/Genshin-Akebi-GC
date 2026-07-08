@@ -72,6 +72,7 @@
     <ClInclude Include="src\framework\adapters\unity-il2cpp\UnityLifecycle.h" />
     <ClInclude Include="src\framework\adapters\unity-il2cpp\UnityHeartbeat.h" />
     <ClInclude Include="src\framework\adapters\unity-il2cpp\UnityCursor.h" />
+    <ClInclude Include="src\framework\adapters\unity-il2cpp\UnityPatch.h" />
     <ClInclude Include="src\framework\pch-il2cpp.h" />
     <ClInclude Include="src\user\cheat\cheat.h" />
     <ClInclude Include="src\user\cheat\esp\ESP.h" />
