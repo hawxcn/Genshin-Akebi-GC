@@ -3,18 +3,19 @@
 #include "FieldEntry.h"
 #include <cheat-base/config/converters.h>
 
+#include <type_traits>
+#include <utility>
+
 namespace config::internal
 {
 	namespace CHECK
 	{
-		struct No {};
-		template<typename T, typename Arg> No operator== (const T&, const Arg&);
+		template<typename T, typename = void>
+		struct EqualExists : std::false_type {};
 
-		template<typename T, typename Arg = T>
-		struct EqualExists
-		{
-			enum { value = !std::is_same<decltype(std::declval<T>() == std::declval<Arg>()), No>::value };
-		};
+		template<typename T>
+		struct EqualExists<T, std::void_t<decltype(std::declval<T>() == std::declval<T>())>>
+			: std::true_type {};
 	}
 
 	template<typename T>
