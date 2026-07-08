@@ -3,6 +3,7 @@
 #include <cheat-base/config/Config.h>
 #include <cheat-base/events/event.hpp>
 #include <cheat-base/render/renderer.h>
+#include <cheat-base/runtime/ICursorController.h>
 
 #include <vector>
 #include <map>
@@ -33,8 +34,13 @@ namespace cheat
 
 		void Init(LPBYTE pFontData, DWORD dFontDataSize, renderer::DXVersion dxVersion = renderer::DXVersion::D3D11);
 
-		virtual void CursorSetVisibility(bool visibility) = 0;
-		virtual bool CursorGetVisibility() = 0;
+		// Cursor control is delegated to an engine-specific ICursorController injected
+		// at assembly time (P2 5.2). Previously these were pure virtuals forcing every
+		// game to subclass the manager; now a UE game can just inject its own controller.
+		// Kept as public methods (InteractiveMap and the menu toggle call them).
+		void SetCursorController(runtime::ICursorController* controller);
+		void CursorSetVisibility(bool visibility);
+		bool CursorGetVisibility();
 
 	protected:
 		config::Field<size_t> m_SelectedSection;
@@ -47,6 +53,8 @@ namespace cheat
 		bool m_IsBlockingInput;
 		bool m_IsPrevCursorActive;
 		bool m_IsProfileConfigurationShowed;
+
+		runtime::ICursorController* m_cursorController = nullptr;
 
 		explicit CheatManagerBase();
 

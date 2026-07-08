@@ -28,6 +28,22 @@ namespace cheat
 	{
 	}
 
+	void CheatManagerBase::SetCursorController(runtime::ICursorController* controller)
+	{
+		m_cursorController = controller;
+	}
+
+	void CheatManagerBase::CursorSetVisibility(bool visibility)
+	{
+		if (m_cursorController != nullptr)
+			m_cursorController->SetVisibility(visibility);
+	}
+
+	bool CheatManagerBase::CursorGetVisibility()
+	{
+		return m_cursorController != nullptr && m_cursorController->GetVisibility();
+	}
+
 	void CheatManagerBase::DrawExternal() const
 	{
 		for (auto& feature : m_Features)

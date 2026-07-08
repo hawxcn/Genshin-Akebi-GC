@@ -13,20 +13,14 @@ cheat::GenshinCM& cheat::GenshinCM::instance()
 	return instance;
 }
 
-void cheat::GenshinCM::CursorSetVisibility(bool visibility)
-{
-	m_cursor.SetVisibility(visibility);
-}
-
-bool cheat::GenshinCM::CursorGetVisibility()
-{
-	return m_cursor.GetVisibility();
-}
-
 cheat::GenshinCM::GenshinCM() :
 	NFEX(f_AccConfig, "Account Config", "data", "General::Multi-Account", internal::AccountConfig(), true),
 	NFS(f_ShowType,   "Name show type",         "General::Multi-Account", ShowType::Pseudo)
 {
+	// Inject the Unity cursor impl into the base (P2 5.2). Replaces the old
+	// CursorSet/GetVisibility overrides; behavior is identical (same UnityCursor).
+	SetCursorController(&m_cursor);
+
 	events::AccountChangedEvent += MY_METHOD_HANDLER(cheat::GenshinCM::OnAccountChanged);
 }
 

@@ -59,9 +59,6 @@ namespace cheat
 	public:
 		static GenshinCM& instance();
 
-		void CursorSetVisibility(bool visibility) final;
-		bool CursorGetVisibility() final;
-
 	protected:
 		enum class ShowType
 		{
@@ -75,7 +72,7 @@ namespace cheat
 		internal::AccountData m_CurrentAccount;
 		config::Field<internal::AccountConfig> f_AccConfig;
 
-		runtime::unity::UnityCursor m_cursor;   // C-line: cursor impl delegate (P2 moves to bootstrap injection into base)
+		runtime::unity::UnityCursor m_cursor;   // injected into the base as ICursorController (P2 5.2; P2-4 moves ownership to the adapter)
 
 		GenshinCM();
 
